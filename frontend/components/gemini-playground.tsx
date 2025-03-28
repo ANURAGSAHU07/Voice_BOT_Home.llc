@@ -91,7 +91,7 @@ export default function GeminiVoiceChat() {
   };
 
   const startStream = async () => {
-    wsRef.current = new WebSocket(`ws://backend-voicebot.onrender.com/ws/${clientId.current}`);
+    wsRef.current = new WebSocket(`wss://backend-voicebot.onrender.com/ws/${clientId.current}`);
 
     wsRef.current.onopen = async () => {
       wsRef.current?.send(JSON.stringify({
