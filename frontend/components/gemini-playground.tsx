@@ -23,7 +23,7 @@ interface Message {
 
 export default function GeminiVoiceChat() {
   const [isStreaming, setIsStreaming] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null); // eslint-disable-line @typescript-eslint/no-unused-vars 
   const [text, setText] = useState('');
   const [audioLevel, setAudioLevel] = useState(0);
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -91,7 +91,7 @@ export default function GeminiVoiceChat() {
   };
 
   const startStream = async () => {
-    wsRef.current = new WebSocket(`ws://localhost:8000/ws/${clientId.current}`);
+    wsRef.current = new WebSocket(`ws://backend-voicebot.onrender.com/ws/${clientId.current}`);
 
     wsRef.current.onopen = async () => {
       wsRef.current?.send(JSON.stringify({
@@ -182,30 +182,36 @@ export default function GeminiVoiceChat() {
     }
   };
 
-  // Stop streaming
-  const stopStream = () => {
-    if (audioInputRef.current) {
-      const { source, processor, stream } = audioInputRef.current;
-      source.disconnect();
-      processor.disconnect();
-      stream.getTracks().forEach(track => track.stop());
-      audioInputRef.current = null;
-    }
 
-    // stop ongoing audio playback
-    if (audioContextRef.current) {
-      audioContextRef.current.close();
-      audioContextRef.current = null;
-    }
 
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
+// Modified version (access properties directly instead of destructuring)
+const stopStream = () => {
+  if (audioInputRef.current) {
+    // Access properties individually
+    const source = audioInputRef.current.source;
+    const processor = audioInputRef.current.processor;
+    const stream = audioInputRef.current.stream;
+    
+    source.disconnect();
+    processor.disconnect();
+    stream.getTracks().forEach(track => track.stop());
+    audioInputRef.current = null;
+  }
 
-    setIsStreaming(false);
-    setIsConnected(false);
-  };
+  // stop ongoing audio playback
+  if (audioContextRef.current) {
+    audioContextRef.current.close();
+    audioContextRef.current = null;
+  }
+
+  if (wsRef.current) {
+    wsRef.current.close();
+    wsRef.current = null;
+  }
+
+  setIsStreaming(false);
+  setIsConnected(false);
+};
 
   const playAudioData = async (audioData: Float32Array) => {
     audioBuffer.current = [...audioBuffer.current, audioData];
