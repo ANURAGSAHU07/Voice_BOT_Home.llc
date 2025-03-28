@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Gemini Mutlimodal Playground",
-  description: "A playground for Realtime Multimodal Gemini 2.0",
+  title: "Voice Home.LLC beta",
+  description: "A playground for realtime voice bot",
 };
 
 export default function RootLayout({
