@@ -157,7 +157,7 @@ export default function GeminiVoiceChat() {
       processor.onaudioprocess = (e) => {
         if (wsRef.current?.readyState === WebSocket.OPEN && !isMicMuted) {
           const inputData = e.inputBuffer.getChannelData(0);
-          const pcmData = float32ToPcm16(Array.from(inputData));
+          const pcmData = float32ToPcm16(inputData);
           // Calculate audio level for visualization
           const level = Math.max(...inputData.map(Math.abs));
           setAudioLevel(level);
