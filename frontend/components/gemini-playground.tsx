@@ -114,10 +114,11 @@ export default function GeminiVoiceChat() {
       }
     };
 
-    wsRef.current.onerror = (_error: Event) => {
+    wsRef.current.onerror = () => {
       setError('WebSocket error occurred');
       setIsStreaming(false);
     };
+    
     
     wsRef.current.onclose = () => {
       setIsStreaming(false);
