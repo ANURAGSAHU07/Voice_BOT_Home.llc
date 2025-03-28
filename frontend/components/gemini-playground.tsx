@@ -114,11 +114,11 @@ export default function GeminiVoiceChat() {
       }
     };
 
-    wsRef.current.onerror = (error: Event) => {
+    wsRef.current.onerror = (_error: Event) => {
       setError('WebSocket error occurred');
       setIsStreaming(false);
     };
-
+    
     wsRef.current.onclose = () => {
       setIsStreaming(false);
     };
@@ -245,8 +245,8 @@ export default function GeminiVoiceChat() {
   return (
 <div className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4 space-y-8 bg-gray-100 rounded-lg shadow-sm">      
       <div className="w-full max-w-md flex items-center gap-2">
-      <span className="text-sm font-medium">VOICE's</span>
-        <Select
+      <span className="text-sm font-medium">VOICE&apos;s</span>
+      <Select
           value={config.voice}
           onValueChange={(value) => setConfig(prev => ({ ...prev, voice: value }))}
           disabled={isConnected}
